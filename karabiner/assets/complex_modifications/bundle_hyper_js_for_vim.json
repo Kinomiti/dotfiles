@@ -15,7 +15,9 @@
           "to": [
             {
               "key_code":"c",
-              "modifiers":["control"],
+              "modifiers":["control"]
+            },
+            {
               "select_input_source": {
                 "input_source_id": "^com\\.apple\\.inputmethod\\.Kotoeri\\.Roman$"
               }
