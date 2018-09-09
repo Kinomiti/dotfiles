@@ -66,11 +66,11 @@
 	function! s:defx_my_settings() abort
 	  " Define mappings
 	  nnoremap <silent><buffer><expr>
-    \ m defx#do_action('open')
+    \ M defx#do_action('open')
 	  nnoremap <silent><buffer><expr>
-    \ E defx#do_action('open', 'vsplit')
+    \ e defx#do_action('open', 'vsplit')
 	  nnoremap <silent><buffer><expr>
-    \ P defx#do_action('open', 'pedit')
+    \ m defx#do_action('open', 'pedit')
 	  nnoremap <silent><buffer><expr>
     \ K defx#do_action('new_directory')
 	  nnoremap <silent><buffer><expr>
@@ -79,6 +79,8 @@
     \ d defx#do_action('remove')
 	  nnoremap <silent><buffer><expr>
     \ r defx#do_action('rename')
+	  nnoremap <silent><buffer><expr>
+    \ u defx#do_action('cd', ['..'])
 	  nnoremap <silent><buffer><expr>
     \ h defx#do_action('cd', ['..'])
 	  nnoremap <silent><buffer><expr>
