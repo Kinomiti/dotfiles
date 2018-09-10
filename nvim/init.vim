@@ -33,11 +33,6 @@
 
 "map
   
-  imap <C-Space> [switch]
-  inoremap [switch] <C-o>:inoremap [switch]<CR>
-  inoremap [switch]a <C-o>$
-  inoremap [switch]e <C-o>^
-
   "lnoremap
   cnoremap <C-Space> <C-^>
   lnoremap e <C-u>e $MYVIMRC
@@ -81,8 +76,6 @@
     \ r defx#do_action('rename')
 	  nnoremap <silent><buffer><expr>
     \ u defx#do_action('cd', ['..'])
-	  nnoremap <silent><buffer><expr>
-    \ h defx#do_action('cd', ['..'])
 	  nnoremap <silent><buffer><expr>
     \ ~ defx#do_action('cd')
 	  nnoremap <silent><buffer><expr>
