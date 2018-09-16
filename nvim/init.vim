@@ -13,6 +13,7 @@
   set ignorecase
   set number
   set splitright
+  set belloff=
 
 "dein settings
   "Note: It executes :filetype off automatically.
@@ -22,12 +23,12 @@
     call dein#add(s:dein_repo)
     call dein#add('Shougo/defx.nvim')
     call dein#add('Shougo/denite.nvim')
-    call dein#add('lyuts/vim-rtags')
     "deoplete&sources
     call dein#add('Shougo/deoplete.nvim')
     call dein#add('Shougo/neoinclude.vim')
     call dein#add('zchee/deoplete-clang')
     call dein#add('Shougo/neco-vim')
+    call dein#add('rhysd/clever-f.vim')
     "colorscheme
     call dein#add('morhetz/gruvbox')
     "end
@@ -36,10 +37,8 @@
   endif
   
 "map
-  
-  cnoremap <C-Space> <C-^>
 
-  inoremap <C-^> <Nop>
+  cnoremap <C-Space> <C-^>
 
   lnoremap e <C-u>e $MYVIMRC
   lnoremap s <C-u>source %
@@ -47,16 +46,19 @@
   lnoremap d <C-u>call dein#update()
   lnoremap j <C-u><C-R>=strftime("%Y-%m-%d-")<CR><C-^>
 
-  nnoremap <C-l> :nohlsearch<CR><C-l>
+  nnoremap <C-l> 
+        \:nohlsearch<CR>
+        \:call clever_f#reset()<CR>
+        \<C-l>
 
-  nmap <Space> [denite]
-  nnoremap [denite] :nnoremap [denite]<CR>
-  nnoremap [denite]f :Denite file<CR>
-  nnoremap [denite]co :Denite command<CR>
-  nnoremap [denite]ch :Denite command_history<CR>
-  nnoremap [denite]b :Denite buffer<CR>
-  nnoremap [denite]d :Defx<CR>
-  nnoremap [denite]r :set relativenumber!<CR>
+  nmap <Space> [spacemap]
+  nnoremap [spacemap] :nnoremap [spacemap]<CR>
+  nnoremap [spacemap]f :Denite file -mode=normal<CR>
+  nnoremap [spacemap]co :Denite command -mode=normal<CR>
+  nnoremap [spacemap]ch :Denite command_history -mode=normal<CR>
+  nnoremap [spacemap]b :Denite buffer -mode=normal<CR>
+  nnoremap [spacemap]d :Defx<R>
+  nnoremap [spacemap]r :set relativenumber!<CR>
 
 "autocmd
   augroup vimrc
@@ -67,8 +69,7 @@
 
 	function! s:defx_my_settings() abort
 	  " Define mappings
-    nnoremap <silent><buffer> q
-    \ :pclose<CR>
+    nnoremap <silent><buffer> q <C-w><C-z>
     nnoremap <silent><buffer> e
     \ :only<CR>
     \ :<C-r>=defx#do_action('open', 'vsplit')<CR><BS><CR>
