@@ -72,13 +72,8 @@
     autocmd!
     autocmd Filetype help nnoremap <buffer> q :q<CR>
     autocmd Filetype defx call s:defx_my_settings()
+    autocmd BufNewFile *.md 0read ~/kinomiti.github.io/_template/post.md
   augroup END
-
-  function! ReadJekyllTemplatePost() abort
-    read ~/kinomiti.github.io/_template/post.md
-    goto
-    delete
-  endfunction
 
 	function! s:defx_my_settings() abort
 	  " Define mappings
@@ -88,7 +83,7 @@
 	  \ defx#do_action('move')
 	  nnoremap <silent><buffer><expr> yp
 	  \ defx#do_action('paste')
-	  nnoremap <silent><buffer><expr> H
+	  nnoremap <silent><buffer><expr> h
 	  \ defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer> q <C-w><C-z>
     nnoremap <silent><buffer> e 
