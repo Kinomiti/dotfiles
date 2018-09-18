@@ -1,5 +1,7 @@
   let s:dein_dir = expand('~/.cache/dein')
   let s:dein_repo = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+  let g:Jekyll_dir = expand('~/kinomiti.github.io/')
+  let g:Jekyll_posts_dir = g:Jekyll_dir . '_posts/'
   let &runtimepath = &runtimepath . "," . s:dein_repo
 
   set hidden
@@ -14,6 +16,7 @@
   set number
   set splitright
   set belloff=
+  set previewheight=10
 
 "dein settings
   "Note: It executes :filetype off automatically.
@@ -38,14 +41,19 @@
   
 "map
 
+  inoremap <C-]> <C-[>l
+
   cnoremap <C-Space> <C-^>
 
   lnoremap e <C-u>e $MYVIMRC
   lnoremap s <C-u>source %
   lnoremap c <C-u>call dein#install()
   lnoremap d <C-u>call dein#update()
-  lnoremap j <C-u><C-R>=strftime("%Y-%m-%d-")<CR><C-^>
+  lnoremap j <C-u>e <C-^><C-R>=g:Jekyll_posts_dir<CR><C-R>=strftime("%Y-%m-%d-")<CR>
+  lnoremap t <C-u>call ReadJekyllTemplatePost()
 
+  nnoremap K "addk"aP
+  nnoremap J "add"ap
   nnoremap <C-l> 
         \:nohlsearch<CR>
         \:call clever_f#reset()<CR>
@@ -57,28 +65,41 @@
   nnoremap [spacemap]co :Denite command -mode=normal<CR>
   nnoremap [spacemap]ch :Denite command_history -mode=normal<CR>
   nnoremap [spacemap]b :Denite buffer -mode=normal<CR>
-  nnoremap [spacemap]d :Defx<R>
+  nnoremap <silent>[spacemap]d :Defx<CR>
   nnoremap [spacemap]r :set relativenumber!<CR>
 
-"autocmd
   augroup vimrc
     autocmd!
     autocmd Filetype help nnoremap <buffer> q :q<CR>
     autocmd Filetype defx call s:defx_my_settings()
   augroup END
 
+  function! ReadJekyllTemplatePost() abort
+    read ~/kinomiti.github.io/_template/post.md
+    goto
+    delete
+  endfunction
+
 	function! s:defx_my_settings() abort
 	  " Define mappings
+	  nnoremap <silent><buffer><expr> yc
+	  \ defx#do_action('copy')
+	  nnoremap <silent><buffer><expr> ym
+	  \ defx#do_action('move')
+	  nnoremap <silent><buffer><expr> yp
+	  \ defx#do_action('paste')
+	  nnoremap <silent><buffer><expr> H
+	  \ defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer> q <C-w><C-z>
-    nnoremap <silent><buffer> e
-    \ :only<CR>
-    \ :<C-r>=defx#do_action('open', 'vsplit')<CR><BS><CR>
+    nnoremap <silent><buffer> e 
+          \:only<CR>
+          \:call defx#_do_action('open', ['vsplit'])<CR>
 	  nnoremap <silent><buffer><expr> m
 	  \ defx#do_action('open', 'pedit')
 	  nnoremap <silent><buffer><expr> N
 	  \ defx#do_action('new_directory')
-	  nnoremap <silent><buffer><expr> n
-	  \ defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> n
+    \ defx#do_action('new_file')
 	  nnoremap <silent><buffer><expr> d
 	  \ defx#do_action('remove')
 	  nnoremap <silent><buffer><expr> r
@@ -102,7 +123,6 @@
 	  nnoremap <silent><buffer> <Space>
     \ :filter defx nnoremap<CR>
 	endfunction
-
 
 "call denite#custom#map
   call denite#custom#map('insert', '<C-j>', '<Enter>')
